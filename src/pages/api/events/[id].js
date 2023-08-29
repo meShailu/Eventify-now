@@ -7,7 +7,7 @@ export default async function handler(request, response) {
 
   if (request.method === "GET") {
     const event = await Event.findById(id);
-    console.log(event);
+    // console.log(event);
     if (!event) {
       return response.status(404).json({ status: "Not found" });
     }
