@@ -1,17 +1,16 @@
 export default function EventCard({
   title,
-  date,
+  datetime,
   location,
-  time,
   mapURL,
   description,
 }) {
   return (
     <div>
       <h2>{title}</h2>
-      <p>{description.substr(0, 70)}...</p>
-      <p>{date}</p>
-      <p>{time}</p>
+      <p>{description}</p>
+      <p>{datetime}</p>
+      <p>{mapURL}</p>
       <p>{location}</p>
     </div>
   );

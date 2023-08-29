@@ -9,6 +9,7 @@ export default function HomePage() {
   if (!data) {
     return <div>Loading...</div>;
   }
+  console.log(data);
   return (
     <div className="app">
       <Header />
@@ -16,12 +17,11 @@ export default function HomePage() {
         {data.map((event) => (
           <EventCard
             key={event.id}
-            title={event.Title}
-            date={event.Date}
-            location={event.Location}
-            time={event.Time}
+            title={event.title}
+            datetime={event.datetime}
+            location={event.location}
             mapURL={event.mapURL}
-            description={event.Description}
+            description={event.description}
           />
         ))}
       </main>
