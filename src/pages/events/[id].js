@@ -1,6 +1,4 @@
 import Header from "Components/Header";
-import Link from "next/link";
-import EventCard from "Components/EventCard";
 import Footer from "Components/Footer";
 import { useRouter } from "next/router";
 import useSWR from "swr";
@@ -17,15 +15,13 @@ export default function ViewEvent() {
     <div className="app">
       <Header />
       <main className="event-list">
-        <Link key={events.id} href={`/events/${events.id}`}>
-          <EventCard
-            title={events.title}
-            datetime={events.datetime}
-            location={events.location}
-            mapURL={events.smapURL}
-            description={events.description}
-          />
-        </Link>
+        <h1>{events.title}</h1>
+        <p>{events.datetime}</p>
+        <h2>{events.location}</h2>
+        <h2>
+          <a href={events.mapURL}>Event Map</a>
+        </h2>
+        <p>{events.description}</p>
       </main>
       <Footer />
     </div>

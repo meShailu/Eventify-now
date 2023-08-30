@@ -16,16 +16,15 @@ export default function HomePage() {
       <Header />
       <main className="event-list">
         {data.map((event) => (
-          <Link key={event._id} href={`/events/${event._id}`}>
-            <EventCard
-              key={event._id}
-              title={event.title}
-              datetime={event.datetime}
-              location={event.location}
-              mapURL={event.mapURL}
-              description={event.description}
-            />
-          </Link>
+          <EventCard
+            eventid={event._id}
+            key={event._id}
+            title={event.title}
+            datetime={event.datetime}
+            location={event.location}
+            // mapURL={event.mapURL}
+            // description={event.description}
+          />
         ))}
       </main>
       <Footer />

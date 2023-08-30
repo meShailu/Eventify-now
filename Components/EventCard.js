@@ -1,18 +1,15 @@
-export default function EventCard({
-  title,
-  datetime,
-  location,
-  mapURL,
-  description,
-}) {
+import Link from "next/link";
+
+export default function EventCard({ title, datetime, location, eventid }) {
+  // console.log("Map URL:", mapURL);
   return (
     <div>
-      <h2>{title}</h2>
-      <p>{description}</p>
+      <Link href={`/events/${eventid}`}>
+        <h2>{title}</h2>
+      </Link>
+
       <p>{datetime}</p>
-      <p>
-        <a href={mapURL}>Show location on Map</a>
-      </p>
+
       <p>{location}</p>
     </div>
   );
