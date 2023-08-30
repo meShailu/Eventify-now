@@ -14,7 +14,7 @@ export default function ViewEvent() {
   return (
     <div className="app">
       <Header />
-      <main className="event-list">
+      <main>
         <h1>{events.title}</h1>
         <p>{events.datetime}</p>
         <h2>{events.location}</h2>
