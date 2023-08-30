@@ -16,6 +16,9 @@ function Header() {
             <Link href="/profile">Profile</Link>
           </li>
           <li>
+            <Link href="/My Bookings">My Bookings</Link>
+          </li>
+          <li>
             <Link href="/logout">Logout</Link>
           </li>
         </ul>
