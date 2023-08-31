@@ -6,42 +6,90 @@ import { useState } from "react";
 
 export default function HomePage() {
   const { data } = useSWR("/api/events");
-  const [selectedFilter, setSelectedFilter] = useState("all");
-  // console.log(data);
+  const [selectedType, setSelectedType] = useState("all");
+  const [selectedCity, setSelectedCity] = useState("all");
+  const [selectedCountry, setSelectedCountry] = useState("all");
+
   if (!data) {
     return <div>Loading...</div>;
   }
 
-  const filterEvents = (events) => {
-    if (selectedFilter === "all") {
-      return events;
-    }
+  const uniqueTypes = Array.from(new Set(data.map((event) => event.type)));
+  const uniqueCities = Array.from(new Set(data.map((event) => event.city)));
+  const uniqueCountries = Array.from(
+    new Set(data.map((event) => event.country))
+  );
 
+  const filterEvents = (events) => {
     return events.filter((event) => {
-      return event.type === selectedFilter;
+      const typeMatch = selectedType === "all" || event.type === selectedType;
+      const cityMatch = selectedCity === "all" || event.city === selectedCity;
+      const countryMatch =
+        selectedCountry === "all" || event.country === selectedCountry;
+
+      return typeMatch && cityMatch && countryMatch;
     });
   };
-  // console.log(data);
+
+  const resetFilters = () => {
+    setSelectedType("all");
+    setSelectedCity("all");
+    setSelectedCountry("all");
+  };
+
   return (
     <div className="app">
       <Header />
       <main className="event-list">
         <div className="filter-dropdown">
-          <label htmlFor="filter">Filter by:Type</label>
+          <label htmlFor="typeFilter">Filter by Type:</label>
           <select
-            id="filter"
-            value={selectedFilter}
-            onChange={(e) => setSelectedFilter(e.target.value)}
+            id="typeFilter"
+            value={selectedType}
+            onChange={(e) => setSelectedType(e.target.value)}
           >
             <option value="all">All</option>
-
-            {data.map((event) => (
-              <option key={event._id} value={event.type}>
-                {event.type}
+            {uniqueTypes.map((type) => (
+              <option key={type} value={type}>
+                {type}
               </option>
             ))}
           </select>
         </div>
+
+        <div className="filter-dropdown">
+          <label htmlFor="cityFilter">Filter by City:</label>
+          <select
+            id="cityFilter"
+            value={selectedCity}
+            onChange={(e) => setSelectedCity(e.target.value)}
+          >
+            <option value="all">All</option>
+            {uniqueCities.map((city) => (
+              <option key={city} value={city}>
+                {city}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="filter-dropdown">
+          <label htmlFor="countryFilter">Filter by Country:</label>
+          <select
+            id="countryFilter"
+            value={selectedCountry}
+            onChange={(e) => setSelectedCountry(e.target.value)}
+          >
+            <option value="all">All</option>
+            {uniqueCountries.map((country) => (
+              <option key={country} value={country}>
+                {country}
+              </option>
+            ))}
+          </select>
+          <button onClick={resetFilters}>Reset Filters</button>
+        </div>
+
         {filterEvents(data).map((event) => (
           <EventCard
             eventid={event._id}
