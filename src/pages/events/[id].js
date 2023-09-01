@@ -10,6 +10,9 @@ export default function ViewEvent() {
   const { id } = router.query;
   const [comment, setComment] = useState("");
   const [commentsList, setCommentsList] = useState([]);
+  const [bookedEvents, setBookedEvents] = useState([]);
+  const [showRegistrationForm, setShowRegistrationForm] = useState(false);
+  const [registrationSubmitted, setRegistrationSubmitted] = useState(false);
 
   const { data: events, isLoading, error } = useSWR(`/api/events/${id}`);
   if (!isReady || isLoading || error) return <h2>Loading...</h2>;
@@ -39,6 +42,12 @@ export default function ViewEvent() {
     setCommentsList(updatedComments);
   };
 
+  const handleBookNow = () => {
+    if (!bookedEvents.includes(events.id)) {
+      setShowRegistrationForm(true);
+    }
+  };
+
   return (
     <div className="app">
       <Header />
@@ -49,10 +58,10 @@ export default function ViewEvent() {
         <h2>
           <a href={events.mapURL}>Event Map</a>
         </h2>
-        <p>{events.description}</p>
         <div className="host-details">
           <h4>Hosted by: {events.hosted_by}</h4>
         </div>
+        <p>{events.description}</p>
 
         <div className="comments-list">
           {commentsList.map((comment, index) => (
@@ -75,6 +84,24 @@ export default function ViewEvent() {
               placeholder="Write your comment here..."
             />
             <button onClick={handleCommentSubmit}>Send</button>
+            {showRegistrationForm && !registrationSubmitted ? (
+              <div className="registration-form">
+                <h2>Complete Your Registration</h2>
+                <input type="text" placeholder="First Name" />
+                <input type="text" placeholder="Last Name" />
+                <button onClick={() => setRegistrationSubmitted(true)}>
+                  Submit
+                </button>
+              </div>
+            ) : (
+              <button onClick={handleBookNow}>Book Now</button>
+            )}
+            {registrationSubmitted && (
+              <p>
+                Thank you for registering! You have successfully booked the
+                event.
+              </p>
+            )}
           </div>
         </div>
       </main>
