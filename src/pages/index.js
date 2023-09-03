@@ -87,7 +87,6 @@ export default function HomePage() {
           </select>
           <button onClick={resetFilters}>Reset Filters</button>
         </div>
-        {console.log(data)}
         {filterEvents(data).map((event) => (
           <EventCard
             eventid={event._id}

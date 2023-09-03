@@ -1,5 +1,5 @@
 "use client";
-import { useSession, SignIn } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 const SigninButton = () => {
   const { data: session } = useSession();
   if (session && session.user) {
@@ -7,7 +7,7 @@ const SigninButton = () => {
   } else {
     return (
       <div>
-        <button onClick={() => SignIn()}>Sign in</button>
+        <button onClick={() => signIn()}>Sign in</button>
       </div>
     );
   }
