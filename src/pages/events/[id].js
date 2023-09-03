@@ -13,7 +13,7 @@ export default function ViewEvent() {
   const [commentsList, setCommentsList] = useState([]);
   const [bookedEvents, setBookedEvents] = useState([]);
   const { data: session } = useSession();
-  console.log(session);
+  // console.log(session);
 
   const { data: events, isLoading, error } = useSWR(`/api/events/${id}`);
   if (!isReady || isLoading || error) return <h2>Loading...</h2>;
@@ -58,46 +58,83 @@ export default function ViewEvent() {
     }
   };
 
+  function getDate(datetime) {
+    const date = new Date(datetime);
+
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // Months are 0-indexed, so add 1
+    const day = date.getDate();
+
+    return `${day}-${month}-${year}`;
+  }
+
+  function getTime(datetime) {
+    const time = new Date(datetime);
+
+    // Get Time components
+    const hours = time.getHours();
+    const minutes = time.getMinutes();
+    return `${hours}:${minutes}`;
+  }
+
   return (
     <div className="app">
       <Header />
       <main>
-        <h1>{events.title}</h1>
-        <p>{events.datetime}</p>
-        <h2>{events.address}</h2>
-        <h2>
-          <a href={events.mapURL}>Event Map</a>
-        </h2>
-        <div className="host-details">
-          <h4>Hosted by: {events.hosted_by}</h4>
-        </div>
-        <p>{events.description}</p>
+        <section className="event">
+          <h1 className="event-title">{events.title}</h1>
+          <p className="event-location">
+            [{events.city}, {events.country}]
+          </p>
+          <p className="event-datetime">
+            Starts at: {getDate(events.start_at)} & Time -
+            {getTime(events.start_at)}
+          </p>
+          <p className="event-datetime">
+            Ends at: {getDate(events.ends_at)} & Time -{" "}
+            {getTime(events.ends_at)}
+          </p>
+          <p className="event-description">{events.description}</p>
 
-        <div className="comments-list">
-          {commentsList.map((comment, index) => (
-            <div key={index} className="comment">
-              {comment.text}
-              <button onClick={() => handleHeartClick(index)}>
-                {comment.liked ? "❤️" : "🤍"}
-              </button>
+          <p className="event-address">
+            {events.address} [<a href={events.mapURL}>Event Map</a>]
+          </p>
 
-              <button onClick={() => handleDeleteComment(index)}>🗑️</button>
+          <p>
+            <span className="event-hostedby">Hosted by: </span>
+            {events.hosted_by}
+          </p>
+
+          <button onClick={handleBookNow} className="btn">
+            Book Now
+          </button>
+        </section>
+
+        <section className="event-comment">
+          <div className="comments-list">
+            {commentsList.map((comment, index) => (
+              <div key={index} className="comment">
+                {comment.text}
+                <button onClick={() => handleHeartClick(index)}>
+                  {comment.liked ? "❤️" : "🤍"}
+                </button>
+
+                <button onClick={() => handleDeleteComment(index)}>🗑️</button>
+              </div>
+            ))}
+
+            <div className="comment-section">
+              <h2>Leave a Comment</h2>
+              <textarea
+                value={comment}
+                onChange={handleCommentChange}
+                rows={4}
+                placeholder="Write your comment here..."
+              />
+              <button onClick={handleCommentSubmit}>Send</button>
             </div>
-          ))}
-
-          <div className="comment-section">
-            <h2>Leave a Comment</h2>
-            <textarea
-              value={comment}
-              onChange={handleCommentChange}
-              rows={4}
-              placeholder="Write your comment here..."
-            />
-            <button onClick={handleCommentSubmit}>Send</button>
-
-            <button onClick={handleBookNow}>Book Now</button>
           </div>
-        </div>
+        </section>
       </main>
       <Footer />
     </div>

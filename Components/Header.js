@@ -19,7 +19,7 @@ function Header() {
             <Link href="/My Bookings">My Bookings</Link>
           </li>
           <li>
-            <Link href="/logout">Logout</Link>
+            <Link href="/login">Login</Link>
           </li>
         </ul>
       </nav>
