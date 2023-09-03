@@ -3,6 +3,7 @@ import Footer from "Components/Footer";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 
 export default function ViewEvent() {
   const router = useRouter();
@@ -11,8 +12,8 @@ export default function ViewEvent() {
   const [comment, setComment] = useState("");
   const [commentsList, setCommentsList] = useState([]);
   const [bookedEvents, setBookedEvents] = useState([]);
-  const [showRegistrationForm, setShowRegistrationForm] = useState(false);
-  const [registrationSubmitted, setRegistrationSubmitted] = useState(false);
+  const { data: session } = useSession();
+  console.log(session);
 
   const { data: events, isLoading, error } = useSWR(`/api/events/${id}`);
   if (!isReady || isLoading || error) return <h2>Loading...</h2>;
@@ -41,10 +42,19 @@ export default function ViewEvent() {
     updatedComments[index].liked = !updatedComments[index].liked;
     setCommentsList(updatedComments);
   };
-
   const handleBookNow = () => {
     if (!bookedEvents.includes(events.id)) {
-      setShowRegistrationForm(true);
+      if (!session) {
+        const confirmed = window.confirm(
+          "You need to be signed in to book this event😟Would you like to sign in now?"
+        );
+        if (!confirmed) {
+          return;
+        }
+        router.push("/login");
+        return;
+      } else {
+      }
     }
   };
 
@@ -84,24 +94,8 @@ export default function ViewEvent() {
               placeholder="Write your comment here..."
             />
             <button onClick={handleCommentSubmit}>Send</button>
-            {showRegistrationForm && !registrationSubmitted ? (
-              <div className="registration-form">
-                <h2>Complete Your Registration</h2>
-                <input type="text" placeholder="First Name" />
-                <input type="text" placeholder="Last Name" />
-                <button onClick={() => setRegistrationSubmitted(true)}>
-                  Submit
-                </button>
-              </div>
-            ) : (
-              <button onClick={handleBookNow}>Book Now</button>
-            )}
-            {registrationSubmitted && (
-              <p>
-                Thank you for registering! You have successfully booked the
-                event.
-              </p>
-            )}
+
+            <button onClick={handleBookNow}>Book Now</button>
           </div>
         </div>
       </main>
