@@ -3,7 +3,7 @@ import Event from "../../../../db/Models/Event.js";
 
 export default async function handler(request, response) {
   await dbConnect();
-  // console.log("TRYING TO GET");
+  console.log("TRYING TO GET");
 
   if (request.method === "GET") {
     const events = await Event.find();

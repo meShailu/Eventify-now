@@ -56,7 +56,6 @@ export default function HomePage() {
             ))}
           </select>
         </div>
-
         <div className="filter-dropdown">
           <label htmlFor="cityFilter">Filter by City:</label>
           <select
@@ -72,7 +71,6 @@ export default function HomePage() {
             ))}
           </select>
         </div>
-
         <div className="filter-dropdown">
           <label htmlFor="countryFilter">Filter by Country:</label>
           <select
@@ -89,7 +87,7 @@ export default function HomePage() {
           </select>
           <button onClick={resetFilters}>Reset Filters</button>
         </div>
-
+        {console.log(data)}
         {filterEvents(data).map((event) => (
           <EventCard
             eventid={event._id}
