@@ -1,10 +1,13 @@
+import React from "react";
 import Link from "next/link";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 function Header() {
+  const { data: session } = useSession();
+
   return (
     <header className="header">
       <div className="logo">
-        {/* <img src="/logo.png" alt="Eventify Now Logo" /> */}
         <span>Eventify Now</span>
       </div>
       <nav className="navigation">
@@ -19,8 +22,25 @@ function Header() {
             <Link href="/My Bookings">My Bookings</Link>
           </li>
           <li>
-            <Link href="/login">Login</Link>
+            {session ? (
+              <Link href="#" onClick={() => signOut()}>
+                Sign Out
+              </Link>
+            ) : (
+              <Link href="#" onClick={() => signIn()}>
+                Sign in
+              </Link>
+            )}
           </li>
+          {session && (
+            <li>
+              <img
+                src={session.user.image}
+                alt=""
+                style={{ borderRadius: "50px" }}
+              />
+            </li>
+          )}
         </ul>
       </nav>
     </header>

@@ -3,7 +3,7 @@ import Footer from "Components/Footer";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { useState } from "react";
-import { useSession } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function ViewEvent() {
   const router = useRouter();
@@ -43,17 +43,25 @@ export default function ViewEvent() {
     setCommentsList(updatedComments);
   };
   const handleBookNow = () => {
+    console.log("aaaaaaaaaaaaaaaaaaaa");
+
     if (!bookedEvents.includes(events.id)) {
+      console.log("wwwwwwwwwwwwwwwww");
+
       if (!session) {
+        console.log("dddddddddddddddddd");
+
         const confirmed = window.confirm(
           "You need to be signed in to book this event😟Would you like to sign in now?"
         );
         if (!confirmed) {
+          console.log("sssssssssssssss");
+
           return;
+        } else {
+          console.log("eeeeeeeeeeeee");
+          signIn();
         }
-        router.push("/login");
-        return;
-      } else {
       }
     }
   };
