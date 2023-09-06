@@ -5,8 +5,8 @@ const { Schema } = mongoose;
 const eventSchema = new Schema({
   type: { type: String, required: true },
   title: { type: String, required: true },
-  start_at: { type: String, required: true },
-  ends_at: { type: String, required: true },
+  start_at: { type: Date, required: true },
+  ends_at: { type: Date, required: true },
   address: { type: String, required: true },
   city: { type: String, required: true },
   country: { type: String, required: true },
