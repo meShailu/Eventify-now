@@ -3,9 +3,12 @@ import EventCard from "Components/EventCard";
 import Footer from "Components/Footer";
 import useSWR from "swr";
 import { useState } from "react";
+import Form from "Components/Form";
+import Link from "next/link";
 
 export default function HomePage() {
   const { data } = useSWR("/api/events");
+  console.log(data);
   const [selectedType, setSelectedType] = useState("all");
   const [selectedCity, setSelectedCity] = useState("all");
   const [selectedCountry, setSelectedCountry] = useState("all");
@@ -95,9 +98,18 @@ export default function HomePage() {
             starts_at={event.start_at}
             address={event.address}
             tags={event.tags}
+            image={event.image}
           />
         ))}
       </main>
+      <a
+        className="btn dasboard-add-btn"
+        href="/create"
+        passHref
+        legacyBehavior
+      >
+        + event
+      </a>
       <Footer />
     </div>
   );

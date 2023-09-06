@@ -6,6 +6,7 @@ export default function EventCard({
   address,
   eventid,
   tags,
+  image,
 }) {
   const dateTime = new Date(starts_at);
   // Get Date components
@@ -20,6 +21,8 @@ export default function EventCard({
   // console.log("Map URL:", mapURL);
   return (
     <div className="event-card">
+      {<img className="event-img" src={image} alt={title} />}
+      {/* Display the image if 'imageUrl' exists */}
       <Link href={`/events/${eventid}`}>
         <h2>{title}</h2>
       </Link>

@@ -14,6 +14,7 @@ const eventSchema = new Schema({
   tags: { type: Array, required: true },
   mapURL: { type: String, required: true },
   description: { type: String, required: true },
+  image: { type: String, required: true },
 });
 
 const Event = mongoose.models.Event || mongoose.model("Event", eventSchema);
