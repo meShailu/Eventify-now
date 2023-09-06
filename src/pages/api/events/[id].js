@@ -7,11 +7,22 @@ export default async function handler(request, response) {
 
   if (request.method === "GET") {
     const event = await Event.findById(id);
-    // console.log(event);
     if (!event) {
       return response.status(404).json({ status: "Not found" });
     }
-
     response.status(200).json(event);
+  } else if (request.method === "PATCH") {
+    try {
+      const updatedEventData = request.body;
+      const updatedEvent = await Event.findByIdAndUpdate(id, updatedEventData, {
+        new: true,
+      });
+      if (!updatedEvent) {
+        return response.status(404).json({ status: "Event not found" });
+      }
+      response.status(200).json(updatedEvent);
+    } catch (error) {
+      response.status(400).json({ error: error.message });
+    }
   }
 }

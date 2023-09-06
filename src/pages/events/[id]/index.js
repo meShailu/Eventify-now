@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
+import Link from "next/link";
 
 export default function ViewEvent() {
   const router = useRouter();
@@ -94,6 +95,10 @@ export default function ViewEvent() {
           <p className="event-location">
             [{events.city}, {events.country}]
           </p>
+          <div className="event-image-container">
+            <img src={events.image} alt={events.title} />
+          </div>
+
           <p className="event-datetime">
             Starts at: {getDate(events.start_at)} & Time -
             {getTime(events.start_at)}
@@ -115,6 +120,11 @@ export default function ViewEvent() {
 
           <button onClick={handleBookNow} className="btn">
             Book Now
+          </button>
+          <button className="btn">
+            <Link href={`/events/${id}/edit`} passHref>
+              Edit Event
+            </Link>
           </button>
         </section>
 
