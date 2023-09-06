@@ -24,5 +24,11 @@ export default async function handler(request, response) {
     } catch (error) {
       response.status(400).json({ error: error.message });
     }
+  } else if (request.method === "DELETE") {
+    const eventToDelete = await Event.findByIdAndDelete(id);
+    if (!eventToDelete) {
+      return response.status(404).json({ status: "Event not found" });
+    }
+    response.status(200).json(eventToDelete);
   }
 }

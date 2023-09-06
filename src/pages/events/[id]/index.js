@@ -86,6 +86,22 @@ export default function ViewEvent() {
     return `${hours}:${minutes}`;
   }
 
+  async function deleteEvent() {
+    try {
+      const response = await fetch(`/api/events/${id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        router.push("/");
+      } else {
+        console.error("Failed to delete event");
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  }
+
   return (
     <div className="app">
       <Header />
@@ -126,9 +142,17 @@ export default function ViewEvent() {
               Edit Event
             </Link>
           </button>
+          <button
+            className="btn"
+            onClick={deleteEvent} // Add this line
+            type="button"
+            variant="delete"
+          >
+            Delete
+          </button>
         </section>
 
-        <section className="event-comment">
+        {/* <section className="event-comment">
           <div className="comments-list">
             {commentsList.map((comment, index) => (
               <div key={index} className="comment">
@@ -150,9 +174,9 @@ export default function ViewEvent() {
                 placeholder="Write your comment here..."
               />
               <button onClick={handleCommentSubmit}>Send</button>
-            </div>
-          </div>
-        </section>
+            </div> */}
+        {/* </div>
+        </section> */}
       </main>
       <Footer />
     </div>

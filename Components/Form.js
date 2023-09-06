@@ -10,6 +10,7 @@ export default function Form({ onSubmit, defaultData }) {
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
+    formData.append("image", imageData); // Append the image data to the form data
 
     const data = Object.fromEntries(formData);
     onSubmit(data);
@@ -42,7 +43,7 @@ export default function Form({ onSubmit, defaultData }) {
         <input
           id="start_at"
           name="start_at"
-          type="text"
+          type="date"
           defaultValue={defaultData?.start_at}
         />
       </div>
@@ -52,7 +53,7 @@ export default function Form({ onSubmit, defaultData }) {
         <input
           id="ends_at"
           name="ends_at"
-          type="text"
+          type="date"
           defaultValue={defaultData?.ends_at}
         />
       </div>
