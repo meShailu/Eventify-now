@@ -14,6 +14,7 @@ export default async function handler(request, response) {
   } else if (request.method === "PATCH") {
     try {
       const updatedEventData = request.body;
+      console.log(updatedEventData);
       const updatedEvent = await Event.findByIdAndUpdate(id, updatedEventData, {
         new: true,
       });

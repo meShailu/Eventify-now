@@ -2,20 +2,12 @@ import ImageUpload from "./ImageUpload";
 import React, { useState } from "react";
 
 export default function Form({ onSubmit, defaultData }) {
-  const [imageData, setImageData] = useState(null);
-  function handleImageUpload(imageData) {
-    setImageData(imageData);
-  }
-
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    formData.append("image", imageData); // Append the image data to the form data
 
     const data = Object.fromEntries(formData);
     onSubmit(data);
-
-    data.image = imageData;
   }
 
   return (
@@ -43,7 +35,7 @@ export default function Form({ onSubmit, defaultData }) {
         <input
           id="start_at"
           name="start_at"
-          type="date"
+          type="datetime-local"
           defaultValue={defaultData?.start_at}
         />
       </div>
@@ -53,7 +45,7 @@ export default function Form({ onSubmit, defaultData }) {
         <input
           id="ends_at"
           name="ends_at"
-          type="date"
+          type="datetime-local"
           defaultValue={defaultData?.ends_at}
         />
       </div>
