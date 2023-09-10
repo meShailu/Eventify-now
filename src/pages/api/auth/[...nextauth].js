@@ -16,7 +16,6 @@ export const authOptions = {
           email: profile.email,
           name: profile.name,
           image: profile.picture,
-          interests: ["tech", "music", "dance"],
         };
       },
     }),
@@ -30,13 +29,14 @@ export const authOptions = {
       console.log("&&&&&&&&&&&&&", session);
       console.log("sssssssssssssssss", user);
       if (session?.user) {
-        // const db = await clientPromise;
-        // const collection = db.db().collection("users");
-        // const userFromDB = await collection.findOne({ email: user.email });
-        // if (userFromDB) {
-        //   session.user.id = userFromDB._id.toString();
-        session.user.id = user.id;
-        session.user.interests = user.interests;
+        const db = await clientPromise;
+        const collection = db.db().collection("users");
+        const userFromDB = await collection.findOne({ email: user.email });
+        if (userFromDB) {
+          session.user.id = userFromDB._id.toString();
+          session.user.id = user.id;
+          session.user.interests = user.interests;
+        }
       }
       return session;
     },

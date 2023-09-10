@@ -49,7 +49,8 @@ main {
 
 .event-card {
   padding: 30px 50px;
-  border: 2px solid black;
+
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .event-img {
@@ -189,6 +190,16 @@ main {
   padding: 5px 10px;
 }
 
+/* profile-page */
+
+.user-profile {
+  margin-bottom: 3rem;
+  font-weight: 500;
+}
+
+.profile-image {
+  border-radius: 50px;
+}
 /* FOOTER */
 .footer {
   text-align: center;

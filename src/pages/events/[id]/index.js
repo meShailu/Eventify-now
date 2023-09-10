@@ -14,7 +14,7 @@ export default function ViewEvent() {
   const [commentsList, setCommentsList] = useState([]);
   const [bookedEvents, setBookedEvents] = useState([]);
   const { data: session } = useSession();
-  // console.log(session);
+  console.log("mysession", session);
 
   const { data: events, isLoading, error } = useSWR(`/api/events/${id}`);
   if (!isReady || isLoading || error) return <h2>Loading...</h2>;
@@ -44,13 +44,13 @@ export default function ViewEvent() {
     setCommentsList(updatedComments);
   };
   const handleBookNow = () => {
-    console.log("aaaaaaaaaaaaaaaaaaaa");
+    // console.log("aaaaaaaaaaaaaaaaaaaa");
 
     if (!bookedEvents.includes(events.id)) {
-      console.log("wwwwwwwwwwwwwwwww");
+      // console.log("wwwwwwwwwwwwwwwww");
 
       if (!session) {
-        console.log("dddddddddddddddddd");
+        // console.log("dddddddddddddddddd");
 
         const confirmed = window.confirm(
           "You need to be signed in to book this event😟Would you like to sign in now?"
@@ -114,7 +114,6 @@ export default function ViewEvent() {
           <div className="event-image-container">
             <img src={events.image} alt={events.title} />
           </div>
-
           <p className="event-datetime">
             Starts at: {getDate(events.start_at)} & Time -
             {getTime(events.start_at)}
@@ -124,32 +123,33 @@ export default function ViewEvent() {
             {getTime(events.ends_at)}
           </p>
           <p className="event-description">{events.description}</p>
-
           <p className="event-address">
             {events.address} [<a href={events.mapURL}>Event Map</a>]
           </p>
-
           <p>
             <span className="event-hostedby">Hosted by: </span>
             {events.hosted_by}
           </p>
-
           <button onClick={handleBookNow} className="btn">
             Book Now
           </button>
-          <button className="btn">
-            <Link href={`/events/${id}/edit`} passHref>
-              Edit Event
-            </Link>
-          </button>
-          <button
-            className="btn"
-            onClick={deleteEvent} // Add this line
-            type="button"
-            variant="delete"
-          >
-            Delete
-          </button>
+          {session?.user.email === "shailushekhawat92@gmail.com" && (
+            <>
+              <button className="btn">
+                <Link href={`/events/${id}/edit`} passHref>
+                  Edit Event
+                </Link>
+              </button>
+              <button
+                className="btn"
+                onClick={deleteEvent} // Add this line
+                type="button"
+                variant="delete"
+              >
+                Delete
+              </button>
+            </>
+          )}
         </section>
 
         {/* <section className="event-comment">

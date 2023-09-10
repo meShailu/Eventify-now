@@ -1,11 +1,13 @@
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
+import Header from "Components/Header";
+import Footer from "Components/Footer";
 
 export default function UserProfile() {
   const { data: session } = useSession();
   console.log(session);
-  // const router = useRouter();
+  const router = useRouter();
   // const { id } = router.query;
   // console.log(id);
 
@@ -13,17 +15,30 @@ export default function UserProfile() {
 
   // if (error) return <div>Error loading user data</div>;
   // if (!users) return <div>Loading...</div>;
+
   if (session) {
     return (
-      <div>
-        <h1>User Profile: {session.user.name}</h1>
-        <p>Email: {session.user.email}</p>
-        <img src={session.user.image} alt={session.user.name} />
-        <p>Intersts: {session.user.interests}</p>
-
-        {/* Add more user details as needed */}
+      <div className="app">
+        <Header />
+        <main>
+          <h1 className="user-profile" id="user-profile">
+            User Profile: {session.user.name}
+          </h1>
+          <p className="user-profile">Email: {session.user.email}</p>
+          <img
+            className="profile-image"
+            src={session.user.image}
+            alt={session.user.name}
+          />
+          {/* <p>Intersts: {session.user.interests}</p> */}
+        </main>
+        <Footer />
       </div>
     );
   }
-  return <h1>Please login</h1>;
+  return (
+    <h1 className="user-profile" id="user-profile">
+      Please log in
+    </h1>
+  );
 }
