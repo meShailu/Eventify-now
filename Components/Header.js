@@ -12,15 +12,21 @@ function Header() {
       </div>
       <nav className="navigation">
         <ul>
-          <li>
-            <Link href="/">Home</Link>
-          </li>
-          <li>
-            <Link href="/profile">Profile</Link>
-          </li>
-          <li>
-            <Link href="/My Bookings">My Bookings</Link>
-          </li>
+          {session && (
+            <>
+              <li>
+                <Link href="/">Home</Link>
+              </li>
+              <li>
+                <Link href="/profile">Profile</Link>
+              </li>
+
+              <li>
+                <Link href="/My Bookings">My Bookings</Link>
+              </li>
+            </>
+          )}
+
           <li>
             {session ? (
               <Link href="#" onClick={() => signOut()}>

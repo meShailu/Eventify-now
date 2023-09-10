@@ -189,6 +189,16 @@ main {
   padding: 5px 10px;
 }
 
+/* profile-page */
+
+.user-profile {
+  margin-bottom: 3rem;
+  font-weight: 500;
+}
+
+.profile-image {
+  border-radius: 50px;
+}
 /* FOOTER */
 .footer {
   text-align: center;
