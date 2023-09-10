@@ -21,21 +21,21 @@ export default function EventCard({
   // console.log("Map URL:", mapURL);
   return (
     <div className="event-card">
-      {<img className="event-img" src={image} alt={title} />}
-      {/* Display the image if 'imageUrl' exists */}
       <Link href={`/events/${eventid}`}>
+        {<img className="event-img" src={image} alt={title} />}
+        {/* Display the image if 'imageUrl' exists */}
         <h2>{title}</h2>
+        <div className="datetime">
+          <p>{`Date: ${year}-${month}-${day}`}</p>
+          <p>{`Time: ${hours}:${minutes}`}</p>
+        </div>
+        <p className="address">{address}</p>
+        <ul className="tags">
+          {tags.map((tag) => (
+            <li>{tag}</li>
+          ))}
+        </ul>
       </Link>
-      <div className="datetime">
-        <p>{`Date: ${year}-${month}-${day}`}</p>
-        <p>{`Time: ${hours}:${minutes}`}</p>
-      </div>
-      <p className="address">{address}</p>
-      <ul className="tags">
-        {tags.map((tag) => (
-          <li>{tag}</li>
-        ))}
-      </ul>
     </div>
   );
 }
