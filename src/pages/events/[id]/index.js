@@ -5,6 +5,8 @@ import useSWR from "swr";
 import { useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function ViewEvent() {
   const router = useRouter();
@@ -13,10 +15,17 @@ export default function ViewEvent() {
   const [comment, setComment] = useState("");
   const [commentsList, setCommentsList] = useState([]);
   const [bookedEvents, setBookedEvents] = useState([]);
+  const [bookingMessage, setBookingMessage] = useState("");
+
   const { data: session } = useSession();
+  const userId = session?.user?.id;
   console.log("mysession", session);
 
   const { data: events, isLoading, error } = useSWR(`/api/events/${id}`);
+  const { data: bookings, bookingError } = useSWR(
+    `/api/mybookings?userId=${userId}`
+  );
+
   if (!isReady || isLoading || error) return <h2>Loading...</h2>;
 
   const handleCommentChange = (e) => {
@@ -43,15 +52,16 @@ export default function ViewEvent() {
     updatedComments[index].liked = !updatedComments[index].liked;
     setCommentsList(updatedComments);
   };
-  const handleBookNow = () => {
-    // console.log("aaaaaaaaaaaaaaaaaaaa");
 
+  function handleBookNowButtonStatus() {
+    const matchingBooking = bookings?.find((booking) => booking.eventId === id);
+
+    return matchingBooking ? matchingBooking?.bookingStatus : "Not booked";
+  }
+
+  const handleBookNow = async () => {
     if (!bookedEvents.includes(events.id)) {
-      // console.log("wwwwwwwwwwwwwwwww");
-
       if (!session) {
-        // console.log("dddddddddddddddddd");
-
         const confirmed = window.confirm(
           "You need to be signed in to book this event😟Would you like to sign in now?"
         );
@@ -62,6 +72,28 @@ export default function ViewEvent() {
         } else {
           console.log("eeeeeeeeeeeee");
           signIn();
+        }
+      } else {
+        try {
+          console.log("eventid", id);
+          const response = await fetch(`/api/mybookings/${id}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ eventId: id, userId: userId }),
+          });
+
+          if (response.ok) {
+            toast.success("Event booked successfully"),
+              setTimeout(() => {
+                router.push(`/mybookings`);
+              }, 4000);
+          } else {
+            console.error("Booking failed");
+          }
+        } catch (error) {
+          console.error("An error occurred:", error);
         }
       }
     }
@@ -130,9 +162,16 @@ export default function ViewEvent() {
             <span className="event-hostedby">Hosted by: </span>
             {events.hosted_by}
           </p>
-          <button onClick={handleBookNow} className="btn">
-            Book Now
-          </button>
+
+          {handleBookNowButtonStatus() === "confirmed" ? (
+            ""
+          ) : (
+            <button onClick={handleBookNow} className="btn">
+              Book Now
+            </button>
+          )}
+
+          {bookingMessage && <p>{bookingMessage}</p>}
           {session?.user.email === "shailushekhawat92@gmail.com" && (
             <>
               <button className="btn">
@@ -148,6 +187,18 @@ export default function ViewEvent() {
               >
                 Delete
               </button>
+              <ToastContainer
+                position="bottom-center" // Set the position to center at the bottom
+                autoClose={4000} // Close after 4 seconds
+                hideProgressBar
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                style={{ zIndex: 9999, textAlign: "center" }} // Add inline styles here
+              />
             </>
           )}
         </section>

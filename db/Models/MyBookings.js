@@ -9,9 +9,9 @@ const myBookingsSchema = new Schema({
     ref: "Event",
     required: true,
   },
-  bookingstatus: { type: String, required: true },
-  paymentInfo: { type: String, required: true },
-  notes: { type: String, required: true },
+  bookingStatus: { type: String },
+  paymentInfo: { type: String },
+  notes: { type: String },
 });
 
 const MyBookings =

@@ -22,7 +22,7 @@ function Header() {
               </li>
 
               <li>
-                <Link href="/My Bookings">My Bookings</Link>
+                <Link href="/mybookings">My Bookings</Link>
               </li>
             </>
           )}
