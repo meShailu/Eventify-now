@@ -2,9 +2,10 @@ import Header from "Components/Header";
 import EventCard from "Components/EventCard";
 import Footer from "Components/Footer";
 import useSWR from "swr";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Form from "Components/Form";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 export default function HomePage() {
   const { data } = useSWR("/api/events");
@@ -12,6 +13,18 @@ export default function HomePage() {
   const [selectedType, setSelectedType] = useState("all");
   const [selectedCity, setSelectedCity] = useState("all");
   const [selectedCountry, setSelectedCountry] = useState("all");
+  const { data: session } = useSession(); // Get user session data
+  const [showSignInMessage, setShowSignInMessage] = useState(false);
+
+  const handleAddEventClick = () => {
+    if (!session) {
+      // User is not signed in, show the sign-in message
+      setShowSignInMessage(true);
+    } else {
+      // User is signed in, navigate to the event creation page
+      window.location.href = "/create";
+    }
+  };
 
   if (!data) {
     return <div>Loading...</div>;
@@ -102,14 +115,17 @@ export default function HomePage() {
           />
         ))}
       </main>
-      <Link
-        className="btn dasboard-add-btn"
-        href="/create"
-        passHref
-        legacyBehavior
-      >
+      <button className="btn dasboard-add-btn" onClick={handleAddEventClick}>
         + event
-      </Link>
+      </button>
+      {showSignInMessage && (
+        <div className="modal">
+          <div className="modal-content">
+            <p>Please sign in to add an event.</p>
+            <button onClick={() => setShowSignInMessage(false)}>Close</button>
+          </div>
+        </div>
+      )}
       <Footer />
     </div>
   );
