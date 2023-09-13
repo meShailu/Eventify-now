@@ -83,7 +83,9 @@ export default function Form({ onSubmit, defaultData }) {
           name="tags"
           type="text"
           defaultValue={defaultData?.tags}
+          onInput="formatTags(this)"
         />
+        <p className="example-text">Example: Tag1, Tag2, Tag3</p>
       </div>
       <div>
         <label htmlFor="hosted_by">Hosted By</label>

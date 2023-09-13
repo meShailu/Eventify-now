@@ -1,5 +1,5 @@
-import dbConnect from "../../../../db/connect";
-import Image from "../../../../db/Models/Image.js"; // Import the 'Image' model/schema
+import dbConnect from "db/connect.js";
+import Image from "next/image.js"; // Import the 'Image' model/schema
 
 export default async function handler(req, res) {
   await dbConnect();
