@@ -102,14 +102,14 @@ export default function HomePage() {
           />
         ))}
       </main>
-      <a
+      <Link
         className="btn dasboard-add-btn"
         href="/create"
         passHref
         legacyBehavior
       >
         + event
-      </a>
+      </Link>
       <Footer />
     </div>
   );

@@ -189,6 +189,18 @@ main {
 .event-add div input {
   padding: 5px 10px;
 }
+.tag-container {
+  display: flex;
+  flex-direction: column;
+}
+.tag-container label {
+  margin-right: 10px; /* Adjust the margin as needed to control spacing between label and input */
+}
+
+.example-text {
+  font-size: 10px; /* Adjust the font size to your preference */
+  margin-top: 5px; /* Add some margin to separate it from the input */
+}
 
 /* profile-page */
 

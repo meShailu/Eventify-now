@@ -3,6 +3,7 @@ import useSWR from "swr";
 import { useSession } from "next-auth/react";
 import Header from "Components/Header";
 import Footer from "Components/Footer";
+import Image from "next/image";
 
 export default function UserProfile() {
   const { data: session } = useSession();
@@ -25,7 +26,7 @@ export default function UserProfile() {
             User Profile: {session.user.name}
           </h1>
           <p className="user-profile">Email: {session.user.email}</p>
-          <img
+          <Image
             className="profile-image"
             src={session.user.image}
             alt={session.user.name}

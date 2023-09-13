@@ -54,7 +54,10 @@ export default function ViewEvent() {
   };
 
   function handleBookNowButtonStatus() {
-    const matchingBooking = bookings?.find((booking) => booking.eventId === id);
+    // const matchingBooking = bookings?.find((booking) => booking.eventId === id);
+    const matchingBooking = Array.isArray(bookings)
+      ? bookings.find((booking) => booking.eventId === id)
+      : null;
 
     return matchingBooking ? matchingBooking?.bookingStatus : "Not booked";
   }
@@ -158,13 +161,16 @@ export default function ViewEvent() {
           <p className="event-address">
             {events.address} [<a href={events.mapURL}>Event Map</a>]
           </p>
+
           <p>
             <span className="event-hostedby">Hosted by: </span>
             {events.hosted_by}
           </p>
 
           {handleBookNowButtonStatus() === "confirmed" ? (
-            ""
+            <button className="btn" disabled>
+              Booked
+            </button>
           ) : (
             <button onClick={handleBookNow} className="btn">
               Book Now

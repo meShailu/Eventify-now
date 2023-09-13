@@ -11,12 +11,12 @@ export default function EventCard({
   const dateTime = new Date(starts_at);
   // Get Date components
   const year = dateTime.getFullYear();
-  const month = dateTime.getMonth() + 1; // Months are 0-indexed, so add 1
-  const day = dateTime.getDate();
+  const month = (dateTime.getMonth() + 1).toString().padStart(2, "0"); // Add zero-padding
+  const day = dateTime.getDate().toString().padStart(2, "0"); // Add zero-padding
 
   // Get Time components
   const hours = dateTime.getHours();
-  const minutes = dateTime.getMinutes();
+  const minutes = dateTime.getMinutes().toString().padStart(2, "0"); // Add zero-padding
 
   // console.log("Map URL:", mapURL);
   return (
