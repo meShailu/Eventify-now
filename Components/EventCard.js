@@ -1,4 +1,14 @@
 import Link from "next/link";
+import {
+  Card,
+  CardHeader,
+  CardFooter,
+  CardBody,
+  Image,
+  Divider,
+} from "@nextui-org/react";
+import { Chip } from "@nextui-org/react";
+import { useRouter } from "next/router";
 
 export default function EventCard({
   title,
@@ -8,6 +18,7 @@ export default function EventCard({
   tags,
   image,
 }) {
+  const router = useRouter();
   const dateTime = new Date(starts_at);
   // Get Date components
   const year = dateTime.getFullYear();
@@ -17,25 +28,31 @@ export default function EventCard({
   // Get Time components
   const hours = dateTime.getHours();
   const minutes = dateTime.getMinutes().toString().padStart(2, "0"); // Add zero-padding
-
+  function handleUrl() {
+    router.push(`/events/${eventid}`);
+  }
   // console.log("Map URL:", mapURL);
   return (
-    <div className="event-card">
-      <Link href={`/events/${eventid}`}>
-        {<img className="event-img" src={image} alt={title} />}
-        {/* Display the image if 'imageUrl' exists */}
-        <h2>{title}</h2>
-        <div className="datetime">
-          <p>{`Date: ${year}-${month}-${day}`}</p>
-          <p>{`Time: ${hours}:${minutes}`}</p>
-        </div>
-        <p className="address">{address}</p>
-        <ul className="tags">
-          {tags.map((tag) => (
-            <li>{tag}</li>
-          ))}
-        </ul>
-      </Link>
-    </div>
+    // <Link href={`/events/${eventid}`}>
+    <Card onPress={handleUrl} isPressable isHoverable isBlurred className="p-4">
+      <CardHeader className="pb-0 pt-2 px-4 flex-col items-center gap-3">
+        <h3 className="font-bold text-large">{title}</h3>
+        <p className="text-tiny uppercase font-bold">{address}</p>
+        <small className="text-default-500">{`Date: ${year}-${month}-${day}`}</small>
+        <small className="text-default-500">{`Time: ${hours}:${minutes}`}</small>
+      </CardHeader>
+      <CardBody className="overflow-visible py-2  items-center">
+        <Image className="object-cover rounded-xl" src={image} alt={title} />
+      </CardBody>
+
+      <CardFooter className="pb-0 pt-2 px-4 flex items-center gap-1">
+        {tags.map((tag) => (
+          <Chip key={tag} size="lg">
+            {tag}
+          </Chip>
+        ))}
+      </CardFooter>
+    </Card>
+    // </Link>
   );
 }

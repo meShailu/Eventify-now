@@ -1,8 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
+
+  /* Orange to Red gradient for a festival feel */
 }
 
 body {
@@ -37,51 +43,19 @@ body {
 
 main {
   padding: 3rem;
+  padding-top: 1rem;
+}
+
+.margin-bottom {
+  margin-bottom: 3rem;
 }
 /* CSS */
-.modal {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-  z-index: 1000; /* Make sure it's above other content */
-}
-
-.modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
-  text-align: center;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-}
-
-.modal button {
-  margin-top: 10px;
-  padding: 5px 10px;
-  background-color: #007bff; /* Blue button color, adjust as needed */
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-/* Center the modal content vertically and horizontally */
-.modal-content {
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-}
 
 /* DASHBOARD MAIN PAGE */
 .event-list {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 50px;
+  gap: 5rem;
   overflow: hidden;
 }
 
@@ -138,8 +112,9 @@ main {
 .event-image-container {
   background-color: rebeccapurple;
   width: 100%;
-  height: 20rem;
+  height: 25rem;
   margin-bottom: 2rem;
+  overflow: hidden;
 }
 .event img {
   width: 100%;
@@ -204,7 +179,7 @@ main {
 
 .event-add {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
   justify-content: center;
   gap: 2rem;

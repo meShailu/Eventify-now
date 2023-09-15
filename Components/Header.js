@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { Avatar } from "@nextui-org/react";
 
 function Header() {
   const { data: session } = useSession();
@@ -40,11 +41,7 @@ function Header() {
           </li>
           {session && (
             <li>
-              <img
-                src={session.user.image}
-                alt=""
-                style={{ borderRadius: "50px" }}
-              />
+              <Avatar isBordered src={session.user.image} size="lg" />
             </li>
           )}
         </ul>

@@ -4,6 +4,9 @@ import useSWR from "swr";
 import Form from "Components/Form";
 import ImageUpload from "Components/ImageUpload";
 import { useState } from "react";
+import Header from "Components/Header";
+import Footer from "Components/Footer";
+import { Button } from "@nextui-org/react";
 
 export default function EditEventPage() {
   const router = useRouter();
@@ -39,14 +42,23 @@ export default function EditEventPage() {
   if (!isReady || isLoading || error) return <h2>Loading...</h2>;
 
   return (
-    <>
-      <h1>Edit Page</h1>
-      <Link href={`/events/${id}`} passHref>
-        Back to Event
-      </Link>
-      <ImageUpload setImageData={setImageData} />
+    <div className="app">
+      <Header />
+      <main>
+        <section className="event">
+          <Button className="m-3" color="secondary">
+            <Link href={`/events/${id}`} passHref>
+              Back to Event
+            </Link>
+          </Button>
+          <h1 className="event-title">Do you want to edit your event?</h1>
 
-      <Form onSubmit={editEvent} defaultData={event} />
-    </>
+          <ImageUpload setImageData={setImageData} />
+
+          <Form onSubmit={editEvent} defaultData={event} />
+        </section>
+      </main>
+      <Footer />
+    </div>
   );
 }
