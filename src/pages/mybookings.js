@@ -66,6 +66,8 @@ const MyBookingsPage = () => {
 
     <div className="app">
       <Header />
+      <h1 className="event-title">Your booked events await you!</h1>
+
       <main className="event-list">
         {filteredEvents.map((event) => (
           <EventCard

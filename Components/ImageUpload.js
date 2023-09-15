@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Button } from "@nextui-org/react";
 
 function ImageUpload({ setImageData }) {
   const [image, setImage] = useState(null);
@@ -19,8 +20,7 @@ function ImageUpload({ setImageData }) {
   }
 
   return (
-    <div className="upload-image-container">
-      Upload an image
+    <div className="flex gap-4 items-center">
       <input
         className="event-image-upload"
         accept="image/*"
