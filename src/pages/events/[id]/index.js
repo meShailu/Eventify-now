@@ -94,7 +94,7 @@ export default function ViewEvent() {
             toast.success("Event booked successfully"),
               setTimeout(() => {
                 router.push(`/mybookings`);
-              }, 4000);
+              }, 2000);
           } else {
             console.error("Booking failed");
           }

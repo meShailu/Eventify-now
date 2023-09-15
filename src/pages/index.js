@@ -5,7 +5,8 @@ import useSWR from "swr";
 import { useState, useEffect } from "react";
 import Form from "Components/Form";
 import { useSession } from "next-auth/react";
-import { UploadIcon } from "Components/AddIcon";
+import { UploadIcon } from "Components/UploadIcon";
+
 import {
   Dropdown,
   Link,

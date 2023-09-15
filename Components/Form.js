@@ -16,9 +16,12 @@ export default function Form({ onSubmit, defaultData }) {
     const tagsArray = tagsValue.split(",").map((tag) => tag.trim());
 
     // Replace the "tags" field in formData with the array
-    formData.set("tags", JSON.stringify(tagsArray));
+    // formData.set("tags", tagsArray);
 
     const data = Object.fromEntries(formData);
+    data.tags = tagsArray;
+    console.log(data);
+
     onSubmit(data, defaultData); // Pass defaultData as a parameter
   }
   const placements = ["inside", "outside", "outside-left"];
@@ -30,11 +33,13 @@ export default function Form({ onSubmit, defaultData }) {
           key="outside-left"
           type="text"
           label="Type"
+          name="type"
           labelPlacement="outside-left"
           placeholder="Enter the type of event"
           description="Example: Music,Tech"
           defaultValue={defaultData?.type}
           size="lg"
+          required
         />
       </div>
 
@@ -43,6 +48,7 @@ export default function Form({ onSubmit, defaultData }) {
           key="outside-left"
           type="text"
           label="Title"
+          name="title"
           labelPlacement="outside-left"
           placeholder="Enter the title of the event"
           description="Short title of the event"
@@ -55,6 +61,7 @@ export default function Form({ onSubmit, defaultData }) {
           key="outside-left"
           type="datetime-local"
           label="Start_at"
+          name="start_at"
           labelPlacement="outside-left"
           placeholder="Enter the Starting date of the event"
           description=""
@@ -69,6 +76,7 @@ export default function Form({ onSubmit, defaultData }) {
           defaultValue={defaultData?.ends_at}
           key="outside-left"
           label="End Date and Time"
+          name="ends_at"
           labelPlacement="outside-left"
           placeholder="Enter the Ending date of the event"
           size="lg"
@@ -79,6 +87,7 @@ export default function Form({ onSubmit, defaultData }) {
           key="outside-left"
           type="text"
           label="Address"
+          name="address"
           labelPlacement="outside-left"
           placeholder=""
           defaultValue={defaultData?.address}
@@ -90,6 +99,7 @@ export default function Form({ onSubmit, defaultData }) {
           key="outside-left"
           type="text"
           label="City"
+          name="city"
           labelPlacement="outside-left"
           defaultValue={defaultData?.city}
           size="lg"
@@ -100,6 +110,7 @@ export default function Form({ onSubmit, defaultData }) {
           key="outside-left"
           type="text"
           label="Country"
+          name="country"
           labelPlacement="outside-left"
           defaultValue={defaultData?.country}
           size="lg"
@@ -110,6 +121,7 @@ export default function Form({ onSubmit, defaultData }) {
           key="outside-left"
           label="Tags"
           type="text"
+          name="tags"
           labelPlacement="outside-left"
           defaultValue={defaultData?.tags}
           size="lg"
@@ -121,6 +133,7 @@ export default function Form({ onSubmit, defaultData }) {
           key="outside-left"
           type="text"
           label="Hosted By"
+          name="hosted_by"
           labelPlacement="outside-left"
           defaultValue={defaultData?.hosted_by}
           size="lg"
@@ -132,6 +145,7 @@ export default function Form({ onSubmit, defaultData }) {
           type="text"
           label="Map URL"
           labelPlacement="outside-left"
+          name="mapURL"
           defaultValue={defaultData?.mapurl}
           size="lg"
         />
@@ -141,6 +155,7 @@ export default function Form({ onSubmit, defaultData }) {
           key="outside-left"
           type="text"
           label="Description"
+          name="description"
           labelPlacement="outside-left"
           defaultValue={defaultData?.description}
           size="lg"
