@@ -182,10 +182,7 @@ export default function HomePage() {
           />
         ))}
       </div>
-      {/* '      </main> */}'{" "}
-      {/* <button className="btn dasboard-add-btn" onClick={handleAddEventClick}>
-        + event
-      </button> */}
+
       <Modal
         backdrop="opaque"
         isOpen={isOpen}
