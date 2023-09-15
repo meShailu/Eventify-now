@@ -167,6 +167,13 @@ main {
 .event-comment {
   display: none;
 }
+.toastify-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+}
 
 /* CREATE EVENT PAGE */
 .event-add-title {
