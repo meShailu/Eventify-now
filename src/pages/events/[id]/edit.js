@@ -46,7 +46,7 @@ export default function EditEventPage() {
       <Header />
       <main>
         <section className="event">
-          <Button className="m-3" color="secondary">
+          <Button className="m-3">
             <Link href={`/events/${id}`} passHref>
               Back to Event
             </Link>

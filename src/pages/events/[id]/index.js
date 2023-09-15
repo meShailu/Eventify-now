@@ -201,8 +201,8 @@ export default function ViewEvent() {
                 </Button>
 
                 <ToastContainer
-                  position="bottom-center" // Set the position to center at the bottom
-                  autoClose={4000} // Close after 4 seconds
+                  position="top-right"
+                  autoClose={4000}
                   hideProgressBar
                   newestOnTop={false}
                   closeOnClick
@@ -210,7 +210,10 @@ export default function ViewEvent() {
                   pauseOnFocusLoss
                   draggable
                   pauseOnHover
-                  style={{ zIndex: 9999, textAlign: "center" }} // Add inline styles here
+                  toastStyle={{
+                    background: "black", // Set the background color of the toast to black
+                    color: "white", // Set the text color of the toast to white
+                  }} // Center both horizontally and vertically
                 />
               </>
             )}
