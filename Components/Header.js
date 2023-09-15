@@ -2,51 +2,62 @@ import React from "react";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { Avatar } from "@nextui-org/react";
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  Button,
+} from "@nextui-org/react";
 
 function Header() {
   const { data: session } = useSession();
 
   return (
-    <header className="header">
-      <div className="logo">
-        <span>Eventify Now</span>
-      </div>
-      <nav className="navigation">
-        <ul>
-          {session && (
-            <>
-              <li>
-                <Link href="/">Home</Link>
-              </li>
-              <li>
-                <Link href="/profile">Profile</Link>
-              </li>
-
-              <li>
-                <Link href="/mybookings">My Bookings</Link>
-              </li>
-            </>
+    <Navbar position="static">
+      <NavbarContent>
+        <NavbarItem>
+          <div className="logo">
+            <span>Eventify Now</span>
+          </div>
+        </NavbarItem>
+      </NavbarContent>
+      <NavbarContent justify="center">
+        <NavbarItem>
+          <Link color="foreground" href="/">
+            Home
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link color="foreground" href="/profile">
+            Profile
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link color="foreground" href="/mybookings">
+            My Bookings
+          </Link>
+        </NavbarItem>
+      </NavbarContent>
+      <NavbarContent justify="end">
+        <NavbarItem>
+          {session ? (
+            <Button color="primary" variant="flat" onClick={() => signOut()}>
+              Sign Out
+            </Button>
+          ) : (
+            <Button color="primary" variant="flat" onClick={() => signIn()}>
+              Sign In
+            </Button>
           )}
-
-          <li>
-            {session ? (
-              <Link href="#" onClick={() => signOut()}>
-                Sign Out
-              </Link>
-            ) : (
-              <Link href="#" onClick={() => signIn()}>
-                Sign in
-              </Link>
-            )}
-          </li>
-          {session && (
-            <li>
-              <Avatar isBordered src={session.user.image} size="lg" />
-            </li>
-          )}
-        </ul>
-      </nav>
-    </header>
+        </NavbarItem>
+        {session && (
+          <NavbarItem>
+            <Avatar isBordered src={session.user.image} size="lg" />
+          </NavbarItem>
+        )}
+      </NavbarContent>
+    </Navbar>
   );
 }
 
