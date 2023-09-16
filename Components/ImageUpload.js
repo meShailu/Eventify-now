@@ -27,7 +27,9 @@ function ImageUpload({ setImageData }) {
         type="file"
         onChange={covertToBase64}
       />
-      {image && <img width={10} height={10} src={image} alt="Selected Image" />}
+      {image && (
+        <img className="img-preview" src={image} alt="Selected Image" />
+      )}
     </div>
   );
 }

@@ -3,7 +3,7 @@ import useSWR from "swr";
 import { useSession } from "next-auth/react";
 import Header from "Components/Header";
 import Footer from "Components/Footer";
-import Image from "next/image";
+import { Image } from "@nextui-org/react";
 
 export default function UserProfile() {
   const { data: session } = useSession();

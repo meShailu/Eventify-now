@@ -188,7 +188,7 @@ const MyBookingsPage = () => {
 
       <main className="event-list">
         {filteredEvents.map((event) => (
-          <div key={event._id} className="event-card">
+          <div key={event._id}>
             <EventCard
               eventid={event._id}
               title={event.title}
@@ -196,14 +196,15 @@ const MyBookingsPage = () => {
               address={event.address}
               tags={event.tags}
               image={event.image}
-            />
-            <Button
-              onClick={() => handleUnbook(event._id)} // Pass the eventId to unbook
-              className="unbook-button"
-              color="warning"
             >
-              Unbook
-            </Button>
+              <Button
+                onClick={() => handleUnbook(event._id)} // Pass the eventId to unbook
+                className="unbook-button"
+                color="warning"
+              >
+                Unbook
+              </Button>
+            </EventCard>
           </div>
         ))}
       </main>
