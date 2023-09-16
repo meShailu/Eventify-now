@@ -6,6 +6,7 @@ import {
   CardBody,
   Image,
   Divider,
+  Button,
 } from "@nextui-org/react";
 import { Chip } from "@nextui-org/react";
 import { useRouter } from "next/router";
@@ -17,6 +18,7 @@ export default function EventCard({
   eventid,
   tags,
   image,
+  children,
 }) {
   const router = useRouter();
   const dateTime = new Date(starts_at);
@@ -34,7 +36,7 @@ export default function EventCard({
   // console.log("Map URL:", mapURL);
   return (
     // <Link href={`/events/${eventid}`}>
-    <Card onPress={handleUrl} isPressable isHoverable isBlurred className="p-4">
+    <Card onPress={handleUrl} isPressable isHoverable className="p-4">
       <CardHeader className="pb-0 pt-2 px-4 flex-col items-center gap-3">
         <h3 className="font-bold text-large">{title}</h3>
         <p className="text-tiny uppercase font-bold">{address}</p>
@@ -45,12 +47,15 @@ export default function EventCard({
         <Image className="object-cover rounded-xl" src={image} alt={title} />
       </CardBody>
 
-      <CardFooter className="pb-0 pt-2 px-4 flex items-center gap-1">
-        {tags.map((tag) => (
-          <Chip key={tag} size="lg">
-            {tag}
-          </Chip>
-        ))}
+      <CardFooter className="pb-0 pt-2 px-4 flex items-center gap-1 justify-between	">
+        <div className="flex gap-1">
+          {tags.map((tag) => (
+            <Chip key={tag} size="lg">
+              {tag}
+            </Chip>
+          ))}
+        </div>
+        {children}
       </CardFooter>
     </Card>
     // </Link>

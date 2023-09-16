@@ -3,7 +3,6 @@ import EventCard from "Components/EventCard";
 import Footer from "Components/Footer";
 import useSWR from "swr";
 import { useState, useEffect } from "react";
-import Form from "Components/Form";
 import { useSession } from "next-auth/react";
 import { UploadIcon } from "Components/UploadIcon";
 
@@ -27,9 +26,9 @@ import {
 export default function HomePage() {
   const { data } = useSWR("/api/events");
   console.log(data);
-  const [selectedType, setSelectedType] = useState("all");
-  const [selectedCity, setSelectedCity] = useState("all");
-  const [selectedCountry, setSelectedCountry] = useState("all");
+  const [selectedType, setSelectedType] = useState("All");
+  const [selectedCity, setSelectedCity] = useState("All");
+  const [selectedCountry, setSelectedCountry] = useState("All");
   const { data: session } = useSession(); // Get user session data
   const [showSignInMessage, setShowSignInMessage] = useState(false);
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
@@ -56,19 +55,19 @@ export default function HomePage() {
 
   const filterEvents = (events) => {
     return events.filter((event) => {
-      const typeMatch = selectedType === "all" || event.type === selectedType;
-      const cityMatch = selectedCity === "all" || event.city === selectedCity;
+      const typeMatch = selectedType === "All" || event.type === selectedType;
+      const cityMatch = selectedCity === "All" || event.city === selectedCity;
       const countryMatch =
-        selectedCountry === "all" || event.country === selectedCountry;
+        selectedCountry === "All" || event.country === selectedCountry;
 
       return typeMatch && cityMatch && countryMatch;
     });
   };
 
   const resetFilters = () => {
-    setSelectedType("all");
-    setSelectedCity("all");
-    setSelectedCountry("all");
+    setSelectedType("All");
+    setSelectedCity("All");
+    setSelectedCountry("All");
   };
 
   function handleDropdown(key) {
@@ -98,7 +97,7 @@ export default function HomePage() {
             value={selectedType}
             onChange={(e) => setSelectedType(e.target.value)}
           >
-            <option value="all">All</option>
+            <option value="All">All</option>
             {uniqueTypes.map((type) => (
               <option key={type} value={type}>
                 {type}
@@ -106,68 +105,74 @@ export default function HomePage() {
             ))}
           </select>
         </div> */}
-      <div className="flex m-4 p-4 gap-4">
-        <Dropdown backdrop="blur" className="w-3">
-          <DropdownTrigger>
-            <Button variant="bordered">Filter by Type:</Button>
-          </DropdownTrigger>
-          <DropdownMenu
-            onAction={(key) => handleDropdown(key)}
-            variant="faded"
-            aria-label="Static Actions"
+      <div className="flex m-4 gap-4 justify-between	items-center	">
+        <div className="flex m-4 p-4 gap-4">
+          <Dropdown backdrop="blur" className="w-3">
+            <DropdownTrigger>
+              <Button variant="bordered">Filter by Type: {selectedType}</Button>
+            </DropdownTrigger>
+            <DropdownMenu
+              onAction={(key) => handleDropdown(key)}
+              variant="faded"
+              aria-label="Static Actions"
+            >
+              <DropdownItem key="All">All</DropdownItem>
+              {uniqueTypes.map((type) => (
+                <DropdownItem key={type} value={type}>
+                  {type}
+                </DropdownItem>
+              ))}
+            </DropdownMenu>
+          </Dropdown>
+          <Dropdown backdrop="blur" className="w-3">
+            <DropdownTrigger>
+              <Button variant="bordered">Filter by City: {selectedCity}</Button>
+            </DropdownTrigger>
+            <DropdownMenu
+              onAction={(key) => handleCityDropdown(key)} // Use handleCityDropdown for city filtering
+              variant="faded"
+              aria-label="Static Actions"
+            >
+              <DropdownItem key="All">All</DropdownItem>
+              {uniqueCities.map((city) => (
+                <DropdownItem key={city} value={city}>
+                  {city}
+                </DropdownItem>
+              ))}
+            </DropdownMenu>
+          </Dropdown>
+          <Dropdown backdrop="blur" className="w-3">
+            <DropdownTrigger>
+              <Button variant="bordered">
+                Filter by Country: {selectedCountry}
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu
+              onAction={(key) => handleCountryDropdown(key)} // Use handleCityDropdown for city filtering
+              variant="faded"
+              aria-label="Static Actions"
+            >
+              <DropdownItem key="All">All</DropdownItem>
+              {uniqueCountries.map((country) => (
+                <DropdownItem key={country} value={country}>
+                  {country}
+                </DropdownItem>
+              ))}
+            </DropdownMenu>
+          </Dropdown>
+          <Button onClick={resetFilters} color="primary">
+            Reset Filters
+          </Button>
+        </div>
+        <div className="margin-r-small">
+          <Button
+            onPress={handleAddEventClick}
+            color="primary"
+            startContent={<UploadIcon />}
           >
-            <DropdownItem key="all">All</DropdownItem>
-            {uniqueTypes.map((type) => (
-              <DropdownItem key={type} value={type}>
-                {type}
-              </DropdownItem>
-            ))}
-          </DropdownMenu>
-        </Dropdown>
-        <Dropdown backdrop="blur" className="w-3">
-          <DropdownTrigger>
-            <Button variant="bordered">Filter by City:</Button>
-          </DropdownTrigger>
-          <DropdownMenu
-            onAction={(key) => handleCityDropdown(key)} // Use handleCityDropdown for city filtering
-            variant="faded"
-            aria-label="Static Actions"
-          >
-            <DropdownItem key="all">All</DropdownItem>
-            {uniqueCities.map((city) => (
-              <DropdownItem key={city} value={city}>
-                {city}
-              </DropdownItem>
-            ))}
-          </DropdownMenu>
-        </Dropdown>
-        <Dropdown backdrop="blur" className="w-3">
-          <DropdownTrigger>
-            <Button variant="bordered">Filter by Country</Button>
-          </DropdownTrigger>
-          <DropdownMenu
-            onAction={(key) => handleCountryDropdown(key)} // Use handleCityDropdown for city filtering
-            variant="faded"
-            aria-label="Static Actions"
-          >
-            <DropdownItem key="all">All</DropdownItem>
-            {uniqueCountries.map((country) => (
-              <DropdownItem key={country} value={country}>
-                {country}
-              </DropdownItem>
-            ))}
-          </DropdownMenu>
-        </Dropdown>
-        <Button onClick={resetFilters} color="primary">
-          Reset Filters
-        </Button>
-        <Button
-          onPress={handleAddEventClick}
-          color="primary"
-          startContent={<UploadIcon />}
-        >
-          Event
-        </Button>
+            Event
+          </Button>
+        </div>
       </div>
       <br />
       <div className="event-list">
@@ -185,7 +190,9 @@ export default function HomePage() {
       </div>
 
       <Modal
-        backdrop="opaque"
+        backdrop="blur"
+        placement="top"
+        shadow
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         radius="2xl"
@@ -203,7 +210,7 @@ export default function HomePage() {
             <p>Please sign in to add an event.</p>
           </ModalBody>
           <ModalFooter>
-            <Button color="foreground" variant="light" onPress={onClose}>
+            <Button color="primary" variant="light" onPress={onClose}>
               Close
             </Button>
           </ModalFooter>
