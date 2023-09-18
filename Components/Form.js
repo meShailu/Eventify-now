@@ -122,6 +122,7 @@ export default function Form({ onSubmit, defaultData }) {
           label="Tags"
           type="text"
           name="tags"
+          description="Enter in capital letters"
           labelPlacement="outside-left"
           defaultValue={defaultData?.tags}
           size="lg"
